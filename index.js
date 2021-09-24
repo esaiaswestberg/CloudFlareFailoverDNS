@@ -1,5 +1,13 @@
-import { app_mode, api_key, zone_id, record_id, service_host, service_contains } from "./env.js";
+//import { app_mode, api_key, zone_id, record_id, service_host, service_contains } from "./env.js";
 import { getSSL, putSSL, get, checkHostStatus } from "./requests.js";
+
+// Define All Environment Variables
+const app_mode = process.env.app_mode;
+const api_key = process.env.api_key;
+const zone_id = process.env.zone_id;
+const record_id = process.env.record_id;
+const service_host = process.env.service_host;
+const service_contains = process.env.service_contains;
 
 let cloudflareIP = '', localIP = '';
 

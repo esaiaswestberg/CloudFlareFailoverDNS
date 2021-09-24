@@ -1,5 +1,6 @@
 import * as https from 'https';
 import * as http from 'http';
+import { hostname } from 'os';
 
 /**
  * Send an HTTPS GET request
@@ -102,7 +103,8 @@ export const checkHostStatus = (ip, port, host, contains, callback) => {
                 else respond(true);
             },
             e => {
-                if(e.toString().indexOf('TIMEDOUT') > 0) respond(false);
+                respond(false);
+                //if(e.toString().indexOf('TIMEDOUT') > 0) respond(false);
             }
         );
     }
