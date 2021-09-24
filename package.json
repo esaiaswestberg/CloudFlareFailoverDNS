@@ -2,7 +2,7 @@
   "name": "cloudflarefailoverdns",
   "version": "1.0.0",
   "description": "",
-  "type": "commonjs",
+  "type": "module",
   "main": "index.js",
   "scripts": {
     "test": "nodemon index.js"
