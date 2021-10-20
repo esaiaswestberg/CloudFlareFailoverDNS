@@ -1,6 +1,7 @@
 import * as https from 'https';
 import * as http from 'http';
 import { hostname } from 'os';
+import { stat } from 'fs';
 
 /**
  * Send an HTTPS GET request
@@ -21,9 +22,6 @@ export const getSSL = (hostname, port, path, headers, data, error = e => console
     }
     
     const req = https.request(options, res => {
-        //console.log('StatusCode:', res.statusCode);
-        //console.log('Headers:', res.headers);
-    
         res.on('data', d => {
             data(d.toString());
         });
@@ -93,6 +91,14 @@ export const get = (hostname, port, path, headers, data, error = e => console.er
     req.end();
 };
 
+/**
+ * Checks weather or not service is reachable on host
+ * @param {String} ip IP-adress to requrested host
+ * @param {Number} port Request port
+ * @param {String} host Hostname of service
+ * @param {String} contains Service needed response
+ * @param {Function} callback Callback function
+ */
 export const checkHostStatus = (ip, port, host, contains, callback) => {
     let respond = s => { callback(s); respond = () => {};};
     if(port == 80) {
@@ -102,10 +108,18 @@ export const checkHostStatus = (ip, port, host, contains, callback) => {
                 if(data.indexOf(contains) <= 0) respond(false);
                 else respond(true);
             },
-            e => {
-                respond(false);
-                //if(e.toString().indexOf('TIMEDOUT') > 0) respond(false);
-            }
+            () => respond(false)
+        );
+    }
+
+    if(port == 443) {
+        getSSL(
+            ip, 443, '/', { host: host },
+            data => {
+                if(data.indexOf(contains) <= 0) respond(false);
+                else respond(true);
+            },
+            () => respond(false)
         );
     }
 };

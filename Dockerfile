@@ -13,6 +13,8 @@ ENV api_key=
 ENV zone_id=
 ENV record_id=
 ENV service_host=
+ENV local_service_port=
+ENV cloudflare_service_port=443
 ENV service_contains=
 
 CMD [ "npm", "start" ]
