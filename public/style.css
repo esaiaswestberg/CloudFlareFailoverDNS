@@ -1,0 +1,65 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+:root {
+	--primary-background: #111;
+	--secondary-background: #151515;
+	--primary-text: #eee;
+	--primary-radius: 0.25rem;
+	--status-main: #5a5;
+	--status-backup: #55f;
+	--status-offline: #f55;
+}
+
+* {
+	font-family: 'Montserrat', sans-serif;
+}
+
+body {
+	background-color: var(--primary-background);
+	color: var(--primary-text);
+	text-align: center;
+}
+
+.timeline {
+	position: relative;
+	width: 80%;
+	height: 5rem;
+	background-color: var(--secondary-background);
+	border-radius: var(--primary-radius);
+	margin-left: auto;
+	margin-right: auto;
+	padding: 1rem;
+
+	display: grid;
+	grid-template-columns: repeat(50, 1fr);
+	grid-gap: 0rem;
+}
+
+.timeline .timeline-item {
+	display: inline-block;
+	position: relative;
+	background-color: transparent;
+}
+
+.timeline .timeline-item::after {
+	content: '';
+	position: absolute;
+	top: 0.25rem;
+	left: 0.25rem;
+	width: calc(100% - 0.5rem);
+	height: calc(100% - 0.5rem);
+	background-color: #555;
+	border-radius: var(--primary-radius);
+}
+
+.timeline .timeline-item[status='main']::after {
+	background-color: var(--status-main);
+}
+
+.timeline-item[status='backup']::after {
+	background-color: var(--status-backup);
+}
+
+.timeline-item[status='offline']::after {
+	background-color: var(--status-offline);
+}
