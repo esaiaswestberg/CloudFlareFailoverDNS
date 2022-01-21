@@ -1,1 +1,5 @@
-export type Status = 'main' | 'backup' | 'offline';
+export enum Status {
+	main = 'main',
+	backup = 'backup',
+	offline = 'offline'
+}
