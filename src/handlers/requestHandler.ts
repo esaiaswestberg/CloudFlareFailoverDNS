@@ -27,7 +27,7 @@ export const put = async (url: string, headers: any, body: any) => {
 	const response = await fetch(url, {
 		headers,
 		method: 'PUT',
-		body
+		body: JSON.stringify(body)
 	});
 
 	if (response.ok) {

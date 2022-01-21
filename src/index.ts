@@ -1,8 +1,6 @@
 import { default as ipGetter } from 'public-ip';
-import { config } from 'dotenv';
 import * as cloudflare from './handlers/cloudflareHandler.js';
 import * as statusHandler from './handlers/statusHandler.js';
-config();
 
 const isMain = async () => {
 	// Fetch client public IP
@@ -15,9 +13,14 @@ const isMain = async () => {
 
 	// Check if Bitwarden is running
 	const isUpLocally = await statusHandler.serviceContainsHTML(publicIp);
-	console.log(`Bitwarden is running: ${isUpLocally}`);
+	console.log(`Service is running: ${isUpLocally}`);
 
-	// TODO: If Running, change cloudflare IP to public IP
+	// If Running, change cloudflare IP to public IP
+	if (isUpLocally && publicIp !== cloudflareIp) {
+		console.log('Setting Cloudflare IP to Public IP');
+		const success = await cloudflare.setIp(publicIp);
+		console.log(`Cloudflare IP set to Public IP: ${success}`);
+	}
 };
 
 const isBackup = async () => {
