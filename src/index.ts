@@ -1,6 +1,7 @@
 import { default as ipGetter } from 'public-ip';
 import * as cloudflare from './handlers/cloudflareHandler.js';
 import * as statusHandler from './handlers/statusHandler.js';
+import './web/express.js';
 
 const isMain = async () => {
 	// Fetch client public IP
