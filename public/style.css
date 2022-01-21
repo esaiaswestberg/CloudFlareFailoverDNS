@@ -20,6 +20,9 @@ body {
 	text-align: center;
 }
 
+/**
+ * Timeline styles
+ */
 .timeline {
 	position: relative;
 	width: 80%;
