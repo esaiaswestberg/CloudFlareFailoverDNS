@@ -1,7 +1,7 @@
 import { Status } from '../types/Status';
 import StatusSnapshot from '../types/StatusSnapshot';
 
-const history: Array<StatusSnapshot> = [];
+export const history: Array<StatusSnapshot> = [];
 
 /**
  * Register a new status.
