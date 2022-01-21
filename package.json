@@ -1,16 +1,24 @@
 {
   "name": "cloudflarefailoverdns",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "",
-  "type": "module",
   "main": "index.js",
   "scripts": {
-    "test": "nodemon index.js",
-    "start": "node index.js"
+    "watch": "tsc --watch",
+    "nodemon": "nodemon ./dist/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EsaiasTilly/CloudFlareFailoverDNS.git"
   },
   "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "node-fetch": "^3.0.0"
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/EsaiasTilly/CloudFlareFailoverDNS/issues"
+  },
+  "homepage": "https://github.com/EsaiasTilly/CloudFlareFailoverDNS#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.15",
+    "typescript": "^4.5.5"
   }
 }
