@@ -1,17 +1,10 @@
 import { default as ipGetter } from 'public-ip';
 import { config } from 'dotenv';
-import * as cloudflare from './utils/cloudflareHandler.js';
+import * as cloudflare from './handlers/cloudflareHandler.js';
+import * as statusHandler from './handlers/statusHandler.js';
 config();
 
-try {
-	/**
-	 * For master:
-	 * 1. Get public IP. X
-	 * 2. Get current Cloudflare IP. X
-	 * 3. Check if local Bitwarden is running.
-	 * 4. If running, change Cloudflare IP to public IP.
-	 */
-
+const isMain = async () => {
 	// Fetch client public IP
 	const publicIp = await ipGetter.v4();
 	console.log(`Public IP: ${publicIp}`);
@@ -19,6 +12,27 @@ try {
 	// Fetch Cloudflare IP
 	const cloudflareIp = await cloudflare.getIp();
 	console.log(`Cloudflare IP: ${cloudflareIp}`);
+
+	// Check if Bitwarden is running
+	const isUpLocally = await statusHandler.serviceContainsHTML(publicIp);
+	console.log(`Bitwarden is running: ${isUpLocally}`);
+
+	// TODO: If Running, change cloudflare IP to public IP
+};
+
+const isBackup = async () => {
+	throw 'Not implemented';
+};
+
+try {
+	if (process.env.TYPE === 'MAIN') {
+		await isMain();
+	} else if (process.env.TYPE === 'BACKUP') {
+		await isBackup();
+	} else {
+		throw new Error('Invalid environmental variable TYPE');
+		process.exit;
+	}
 } catch (error) {
 	console.error(error);
 }
