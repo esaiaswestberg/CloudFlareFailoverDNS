@@ -24,7 +24,33 @@ const isMain = async () => {
 };
 
 const isBackup = async () => {
-	throw 'Not implemented';
+	// Fetch Cloudflare IP
+	const cloudflareIp = await cloudflare.getIp();
+	console.log(`Cloudflare IP: ${cloudflareIp}`);
+
+	// Is service up on cloudflare?
+	const isUpCloudflare = await statusHandler.serviceContainsHTML(
+		cloudflareIp
+	);
+	console.log(`Cloudflare service is running: ${isUpCloudflare}`);
+
+	// Fetch client public IP
+	const publicIp = await ipGetter.v4();
+	console.log(`Public IP: ${publicIp}`);
+
+	// If not, is it up locally?
+	let isUpLocally = false;
+	if (!isUpCloudflare) {
+		isUpLocally = await statusHandler.serviceContainsHTML(publicIp);
+		console.log(`Local service is running: ${isUpLocally}`);
+	}
+
+	// Change if up
+	if (isUpLocally && publicIp !== cloudflareIp) {
+		console.log('Setting Cloudflare IP to Public IP');
+		const success = await cloudflare.setIp(publicIp);
+		console.log(`Cloudflare IP set to Public IP: ${success}`);
+	}
 };
 
 try {
