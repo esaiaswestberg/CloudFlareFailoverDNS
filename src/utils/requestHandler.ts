@@ -6,12 +6,9 @@ import fetch from 'node-fetch';
  * @returns The response.
  * @throws An error if the request failed.
  */
-export const get = async (url: string) => {
-    const options = {
-        
-    }
-
-    const response = await fetch(url, options);
+export const get = async (url: string, headers: any) => {
+	// @ts-ignore
+    const response = await fetch(url, { headers });
     if (response.ok) {
         return await response.text();
     }
