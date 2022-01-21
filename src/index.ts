@@ -55,12 +55,12 @@ const isBackup = async () => {
 
 try {
 	if (process.env.TYPE === 'MAIN') {
-		await isMain();
+		setInterval(async () => await isMain(), 10000);
 	} else if (process.env.TYPE === 'BACKUP') {
-		await isBackup();
+		setInterval(async () => await isBackup(), 10000);
 	} else {
 		throw new Error('Invalid environmental variable TYPE');
-		process.exit;
+		process.exit();
 	}
 } catch (error) {
 	console.error(error);
