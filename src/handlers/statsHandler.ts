@@ -1,4 +1,4 @@
-import { Status } from '../types/Status';
+import { Status } from '../enums/Status.js';
 import StatusSnapshot from '../types/StatusSnapshot';
 
 export const history: Array<StatusSnapshot> = [];

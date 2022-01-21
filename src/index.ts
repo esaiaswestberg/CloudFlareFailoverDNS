@@ -2,6 +2,7 @@ import { default as ipGetter } from 'public-ip';
 import * as cloudflare from './handlers/cloudflareHandler.js';
 import * as statusHandler from './handlers/statusHandler.js';
 import { registerStatus } from './handlers/statsHandler.js';
+import { Status } from './enums/Status.js';
 import './web/express.js';
 
 const isMain = async () => {
@@ -52,6 +53,13 @@ const isBackup = async () => {
 		console.log('Setting Cloudflare IP to Public IP');
 		const success = await cloudflare.setIp(publicIp);
 		console.log(`Cloudflare IP set to Public IP: ${success}`);
+	}
+
+	// Register status
+	if (cloudflareIp !== publicIp) {
+		registerStatus(isUpCloudflare ? Status.main : Status.offline);
+	} else if (cloudflareIp === publicIp) {
+		registerStatus(isUpLocally ? Status.backup : Status.offline);
 	}
 };
 
