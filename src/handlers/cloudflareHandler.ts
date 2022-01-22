@@ -6,15 +6,19 @@ import { ZONE_ID, RECORD_ID, API_KEY, SERVICE_HOST } from '../env_constants.js';
  * @returns The current Cloudflare IP.
  */
 export const getIp = async (): Promise<string> => {
-	const resp = await get(
-		`https://api.cloudflare.com/client/v4/zones/${ZONE_ID}/dns_records/${RECORD_ID}`,
-		{
-			'Authorization': `Bearer ${API_KEY}`,
-			'Content-Type': 'application/json'
-		}
-	);
+	try {
+		const resp = await get(
+			`https://api.cloudflare.com/client/v4/zones/${ZONE_ID}/dns_records/${RECORD_ID}`,
+			{
+				'Authorization': `Bearer ${API_KEY}`,
+				'Content-Type': 'application/json'
+			}
+		);
 
-	return JSON.parse(resp).result.content;
+		return JSON.parse(resp).result.content;
+	} catch (error) {
+		return '';
+	}
 };
 
 /**

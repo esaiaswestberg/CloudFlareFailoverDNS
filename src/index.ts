@@ -11,6 +11,11 @@ const isMain = async () => {
 	const cloudflareIp = await cloudflare.getIp();
 	console.log(`Cloudflare IP: ${cloudflareIp}`);
 
+	// In case of failure getting Cloudflare IP
+	if (!cloudflareIp) {
+		return console.error('Unable to get cloudflare IP');
+	}
+
 	// Check if Bitwarden is running
 	const isUpLocally = await statusHandler.serviceContainsHTML(publicIp);
 	console.log(`Service is running: ${isUpLocally}`);
@@ -27,6 +32,11 @@ const isBackup = async () => {
 	// Fetch Cloudflare IP
 	const cloudflareIp = await cloudflare.getIp();
 	console.log(`Cloudflare IP: ${cloudflareIp}`);
+
+	// In case of failure getting Cloudflare IP
+	if (!cloudflareIp) {
+		return console.error('Unable to get cloudflare IP');
+	}
 
 	// Is service up on cloudflare?
 	const isUpCloudflare = await statusHandler.serviceContainsHTML(
