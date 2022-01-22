@@ -3,7 +3,7 @@ import { ZONE_ID, RECORD_ID, API_KEY, SERVICE_HOST } from '../env_constants.js';
 
 /**
  * Gets the current IP address of the Cloudflare DNS record.
- * @returns The current Cloudflare IP.
+ * @returns The current Cloudflare IP. Returns an empty string if the request fails.
  */
 export const getIp = async (): Promise<string> => {
 	try {
