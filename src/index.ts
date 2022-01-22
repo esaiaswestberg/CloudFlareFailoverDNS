@@ -63,6 +63,20 @@ const isBackup = async () => {
 	}
 };
 
+// TODO: REMOVE
+for (let d = 0; d < 30; d++) {
+	const date = new Date(Date.now() - d * 24 * 60 * 60 * 1000);
+	registerStatus(
+		Math.random() > 0.75
+			? Status.main
+			: Math.random() > 0.75
+			? Status.backup
+			: Status.offline,
+		date
+	);
+}
+console.log('Dev data generated');
+
 try {
 	if (process.env.TYPE === 'MAIN') {
 		setInterval(async () => await isMain(), 10000);
